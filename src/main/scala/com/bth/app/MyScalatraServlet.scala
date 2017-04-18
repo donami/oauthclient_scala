@@ -86,6 +86,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
   }
 
   get("/logout") {
+    cookies.delete(this.cookieKey)
     redirect(this.OAUTH_SERVER + "/logout?redirect=http://localhost:8080")
   }
 
