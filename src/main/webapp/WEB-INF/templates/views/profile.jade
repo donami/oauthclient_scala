@@ -1,0 +1,59 @@
+-@ val username: String
+
+.ui.raised.segment
+    .ui.breadcrumb.mar-b-30
+        a.section= "Home"
+        i.right.chevron.icon.divider
+        a.section= "Profile"
+        i.right.arrow.icon.divider
+        .active.section=" Personal Information"
+
+    .ui.grid
+        .twelve.wide.column
+
+            .ui.items
+                .item
+                    .image
+                        img(src="/img/user_profile.png")
+                    .content
+                        a.header= "About me"
+                        .meta
+                            span= "My Story"
+                        .description
+                            p= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tellus erat, tristique at pharetra id, elementum non lacus. Vestibulum a nunc enim. Proin euismod accumsan enim eget mollis. In bibendum nulla quam, et luctus augue aliquam eu. Phasellus interdum orci sit amet odio tempus sodales. Fusce turpis risus, interdum in vestibulum sed, convallis vitae tortor. Donec condimentum, tellus in varius sagittis, mi lacus sollicitudin enim, sit amet mattis elit eros in enim. Ut at tincidunt risus. Nullam et lectus lectus. Donec tristique diam turpis, eget aliquam ipsum varius eu. Phasellus ut justo ipsum. Duis nec felis quis nisl iaculis tincidunt nec id turpis. Morbi nisi purus, rutrum sit amet nulla eget, elementum efficitur dui. Mauris laoreet nulla vel erat cursus, id pulvinar orci tempus. Duis id purus urna."
+                            p= "Cras volutpat mauris sit amet consectetur pulvinar. Donec imperdiet fermentum augue vitae commodo. Etiam vel nulla ultricies, tincidunt justo quis, pulvinar risus. Nam varius id orci ut pretium. Vivamus rutrum dui ac augue consectetur, quis finibus libero convallis. Donec pulvinar tincidunt nisi, ut porttitor risus euismod interdum. Donec tempor quis lectus nec pulvinar. Proin fermentum fringilla sapien, vel porttitor tortor lobortis ultrices. Quisque interdum dolor neque, eget feugiat felis faucibus eget. Vivamus gravida tincidunt lorem. Nullam nulla nulla, condimentum eu sagittis sed, fringilla sit amet velit. Vestibulum quis aliquam sem, ac facilisis mi."
+                        .extra= "Additional Details"
+
+
+        .four.wide.column
+            .ui.card
+                .image
+                    img(src="/img/user_profile.png")
+                .content
+                    a.header= username
+                    .meta
+                        span.date= "Joined in 2016"
+                    .description= "Hello my name is " + username
+                .extra.content
+                    a
+                        i.user.icon
+                        | 22 friends
+                a.ui.bottom.attached.primary.button(href="/logout")= "Sign out"
+
+
+.ui.segment.raised
+    .ui.list
+        .item
+            i.users.icon
+            .content= username
+        .item
+            i.marker.icon
+            .content= "Karlskrona, SE"
+        .item
+            i.mail.icon
+            .content
+                a(href="mailto:myemail@email.com")= "myemail@email.com"
+        .item
+            i.linkify.icon
+            .content
+                a(href="http://website.com")= "website.com"

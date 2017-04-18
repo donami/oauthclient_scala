@@ -1,0 +1,26 @@
+#wrap {
+    margin-top: 40px;
+}
+
+.logo {
+    width: 48px !important;
+}
+
+.mar-b-30 {
+    margin-bottom: 30px !important;
+}
+
+.pusher {
+  display: flex !important;
+  min-height: 100vh !important;
+  flex-direction: column !important;
+}
+
+.pusher > .footer {
+  flex: 1 !important;
+}
+
+.main-content {
+    margin-bottom: 40px;
+    min-height: 600px;
+}

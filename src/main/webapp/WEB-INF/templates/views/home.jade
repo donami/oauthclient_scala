@@ -1,0 +1,30 @@
+-@ val username: String
+
+.ui.raised.segment
+    .ui.grid
+        .four.wide.column
+            .ui.card
+                .image
+                    img(src="/img/user_profile.png")
+                .content
+                    a.header= username
+                    .meta
+                        span.date= "Joined in 2016"
+                    .description= "Hello my name is " + username
+                .extra.content
+                    a
+                        i.user.icon
+                        | 22 friends
+                a.ui.bottom.attached.primary.button(href="/logout")= "Sign out"
+
+        .twelve.wide.column
+            .ui.stacked.segment
+                h1.ui.header= "Welcome " + username
+                p= "You are now logged in"
+
+            .ui.stacked.segment
+                h2.ui.center.aligned.icon.header
+                    i.circular.users.icon
+                    | Friends
+
+                p= "You have no friends :("

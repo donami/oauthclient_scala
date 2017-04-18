@@ -1,0 +1,51 @@
+-@ val title: String
+-@ val headline: String = title
+-@ val body: String
+-@ val isAuthenticated: Boolean = false
+
+!!!
+html
+    head
+        title= title
+        link(href="/css/semantic.ui.min.css" rel="stylesheet")
+        link(href="/css/default.css" rel="stylesheet")
+    body.pushable
+        .pusher
+
+            .ui.stackable.menu
+                .ui.container
+                    .item
+                        img.logo(src="/img/logo.svg")
+                    a.item(href="/")= "Home"
+                    a.item(href="/profile")= "Profile"
+
+                    - if (isAuthenticated == true) {
+                        a.item(href="/logout")= "Logout"
+                    - } else {
+                    a.item(href="/start")= "Sign in"
+                    - }
+
+            .ui.container#wrap
+                .main-content
+                    != body
+
+            .ui.inverted.vertical.footer.segment
+                .ui.container
+                    .ui.stackable.inverted.divided.equal.height.stackable.grid
+
+                        .three.wide.column
+                            h4.ui.inverted.header= "About"
+                            .ui.inverted.link.list
+                                a.item(href="#")= "About"
+                                a.item(href="http://openid.net/connect/" target="_blank")= "OpenID Connect"
+                                a.item(href="https://oauth.net/2/" target="_blank")= "OAuth 2.0"
+
+                        .three.wide.column
+                            h4.ui.inverted.header= "About"
+                            .ui.inverted.link.list
+                                a.item(href="#")= "About"
+                                a.item(href="http://openid.net/connect/" target="_blank")= "OpenID Connect"
+                                a.item(href="https://oauth.net/2/" target="_blank")= "OAuth 2.0"
+                        .seven.wide.column
+                            h4.ui.inverted.header
+                            p= "Client Application using OpenID Connect protocol to handle authorization"
