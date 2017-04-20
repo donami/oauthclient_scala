@@ -1,3 +1,5 @@
+-@ val scope: List[String]
+
 .ui.raised.segment
     .ui.breadcrumb.mar-b-30
         a.section= "Home"
@@ -6,3 +8,10 @@
 
     h1= "You are not logged in"
     a.ui.button.primary(href="/start")= "Click here to login"
+
+    div.ui.horizontal.divider= "Debug"
+
+    div.ui.blue.labels(style="margin-top: 20px")
+        - for(value <- scope)
+            a.ui.label= value
+
