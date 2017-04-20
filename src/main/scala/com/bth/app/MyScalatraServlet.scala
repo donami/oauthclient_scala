@@ -188,7 +188,6 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     this.setCookie(jsonString)
     out.println(userInfo)
     out.println("=============")
-
     redirect("/")
   }
 
