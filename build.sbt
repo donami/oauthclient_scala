@@ -43,4 +43,6 @@ scalateTemplateConfig in Compile := {
   )
 }
 
+containerConfigFile := Some(file("etc/jetty-test.xml"))
+
 enablePlugins(JettyPlugin)

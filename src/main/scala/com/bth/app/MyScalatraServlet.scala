@@ -15,7 +15,9 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
   private val encryptionKey: String = "My Secret Key"
 
   // The OAuth Server (no ending slash here)
-  private val OAUTH_SERVER = "http://localhost:9090"
+  private val OAUTH_SERVER = "https://localhost:8443"
+  private val CALLBACK_URL = "https://localhost:8444/OAuth2Callback"
+  private val CLIENT_URL = "https://localhost:8444"
 
   /**
     * Return true if a cookie session exists
@@ -87,7 +89,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
 
   get("/logout") {
     cookies.delete(this.cookieKey)
-    redirect(this.OAUTH_SERVER + "/logout?redirect=http://localhost:8080")
+    redirect(this.OAUTH_SERVER + "/logout?redirect=" + this.CLIENT_URL)
   }
 
   get("/") {
@@ -105,7 +107,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
   get("/start") {
     val outhProvider: String = this.OAUTH_SERVER + "/authorize"
 
-    val callbackUrl: String = "http://127.0.0.1:8080/OAuth2Callback"
+    val callbackUrl: String = this.CALLBACK_URL
     val encodedCBUrl: String = URLEncoder.encode(callbackUrl,"UTF-8")
 
     val clientID: String = "t83g-aaa"
@@ -124,7 +126,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
   get("/OAuth2Callback") {
 
     val accessTokenURL = this.OAUTH_SERVER + "/token"
-    val callbackUrl = "http://127.0.0.1:8080/OAuth2Callback"
+    val callbackUrl = this.CALLBACK_URL
     val clientID = "t83g-aaa" //provide your own
     val clientSecret = "Nxfq-rj7Y-HgtH" //provide your own
 
