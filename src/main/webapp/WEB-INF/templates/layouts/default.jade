@@ -2,6 +2,7 @@
 -@ val headline: String = title
 -@ val body: String
 -@ val isAuthenticated: Boolean = false
+-@ val user: String = ""
 
 !!!
 html
@@ -9,7 +10,25 @@ html
         title= title
         link(href="/css/semantic.ui.min.css" rel="stylesheet")
         link(href="/css/default.css" rel="stylesheet")
+        script(src="/script/script.js")
     body.pushable
+
+        div.ui.dimmer.modals.page#modalWrapper
+            div.ui.modal#modal(style="top: 20% !important")
+                i.close.icon(onclick="toggleDebugWindow()")
+                div.header= "Debug Window"
+                div.image.content
+                    div.ui.medium.image
+                        img(src="/img/debug.png")
+                    div.description
+                        div.ui.header= "This is the debug window"
+                        p#jsonUserInfo(style="display: none")= user
+                        div#debugContent
+                div.actions
+                    div.ui.positive.right.labeled.icon.button(onclick="toggleDebugWindow()")
+                        | Close window
+                        | <i class="checkmark icon"></i>
+
         .pusher
 
             .ui.stackable.menu
@@ -28,6 +47,8 @@ html
             .ui.container#wrap
                 .main-content
                     != body
+                    button.ui.circular.icon.button(onclick="toggleDebugWindow()")
+                        i.icon.settings
 
             .ui.inverted.vertical.footer.segment
                 .ui.container

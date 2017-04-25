@@ -104,7 +104,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     }
     else {
       contentType="text/html"
-      layoutTemplate("/home.jade", "title" -> "Client", "username" -> this.getUserInfo.get("uid").get, "isAuthenticated" -> this.isAuthenticated)
+      layoutTemplate("/home.jade", "title" -> "Client", "username" -> this.getUserInfo.get("uid").get, "isAuthenticated" -> this.isAuthenticated, "user" -> cookies.get("debugId").getOrElse("{}"))
     }
   }
 
@@ -179,6 +179,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     val id = Json.parse(java.util.Base64.getDecoder.decode(idt(1)))
     out.println("=============")
     out.println(Json.prettyPrint(id))
+    cookies.set("debugId", Json.stringify(id))
     out.println("=============")
 
     val test = Json.stringify(id)
@@ -186,7 +187,6 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     val userInfo = (id \ "user_info").get
     val jsonString = Json.stringify(Json.toJson(userInfo))
     this.setCookie(jsonString)
-    out.println(userInfo)
     out.println("=============")
     redirect("/")
   }
