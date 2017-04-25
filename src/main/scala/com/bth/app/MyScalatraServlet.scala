@@ -19,6 +19,8 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
   private val CALLBACK_URL = "https://localhost:8444/OAuth2Callback"
   private val CLIENT_URL = "https://localhost:8444"
 
+  private val scope: Seq[String] = Seq("openid", "email", "profile")
+
   /**
     * Return true if a cookie session exists
     * @return True of false
@@ -77,6 +79,8 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     }
   }
 
+  def scopeAsString(scope: Seq[String]): String = scope.mkString("%20")
+
   get("/profile") {
     if (this.isAuthenticated) {
       contentType="text/html"
@@ -96,11 +100,11 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     // Redirect the user to the login page if not logged in
     if (!this.isAuthenticated) {
       contentType="text/html"
-      layoutTemplate("/login.jade", "title" -> "Client")
+      layoutTemplate("/login.jade", "title" -> "Client", "scope" -> this.scope)
     }
     else {
       contentType="text/html"
-      layoutTemplate("/home.jade", "title" -> "Client", "username" -> this.getUserInfo.get("uid").get, "isAuthenticated" -> this.isAuthenticated)
+      layoutTemplate("/home.jade", "title" -> "Client", "username" -> this.getUserInfo.get("uid").get, "isAuthenticated" -> this.isAuthenticated, "user" -> cookies.get("debugId").getOrElse("{}"))
     }
   }
 
@@ -119,7 +123,9 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     val state = Base64.getEncoder.withoutPadding.encodeToString(md.digest)
     request.getSession.setAttribute("oauthstate",state)
 
-    val oURL = s"""$outhProvider?scope=openid%20email%20profile%20uid&state=$state&redirect_uri=$encodedCBUrl&response_type=code&client_id=$clientID"""
+    val scopeString = this.scopeAsString(this.scope)
+
+    val oURL = s"""$outhProvider?scope=$scopeString&state=$state&redirect_uri=$encodedCBUrl&response_type=code&client_id=$clientID"""
     response.sendRedirect(oURL)
   }
 
@@ -173,6 +179,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     val id = Json.parse(java.util.Base64.getDecoder.decode(idt(1)))
     out.println("=============")
     out.println(Json.prettyPrint(id))
+    cookies.set("debugId", Json.stringify(id))
     out.println("=============")
 
     val test = Json.stringify(id)
@@ -180,7 +187,6 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     val userInfo = (id \ "user_info").get
     val jsonString = Json.stringify(Json.toJson(userInfo))
     this.setCookie(jsonString)
-    out.println(userInfo)
     out.println("=============")
     redirect("/")
   }
