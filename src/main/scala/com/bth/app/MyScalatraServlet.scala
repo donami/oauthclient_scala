@@ -81,6 +81,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
 
   def scopeAsString(scope: Seq[String]): String = scope.mkString("%20")
 
+
   get("/profile") {
     if (this.isAuthenticated) {
       contentType="text/html"
