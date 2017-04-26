@@ -84,7 +84,12 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
   get("/profile") {
     if (this.isAuthenticated) {
       contentType="text/html"
-      layoutTemplate("/profile.jade", "title" -> "Client", "username" -> this.getUserInfo.get("uid").get, "isAuthenticated" -> this.isAuthenticated)
+      layoutTemplate("/profile.jade",
+        "title" -> "Client",
+        "username" -> this.getUserInfo.get("uid").get,
+        "isAuthenticated" -> this.isAuthenticated,
+        "user" -> cookies.get("debugId").getOrElse("{}")
+      )
     }
     else {
       redirect("/")
@@ -104,7 +109,12 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     }
     else {
       contentType="text/html"
-      layoutTemplate("/home.jade", "title" -> "Client", "username" -> this.getUserInfo.get("uid").get, "isAuthenticated" -> this.isAuthenticated, "user" -> cookies.get("debugId").getOrElse("{}"))
+      layoutTemplate("/home.jade",
+        "title" -> "Client",
+        "username" -> this.getUserInfo.get("uid").get,
+        "isAuthenticated" -> this.isAuthenticated,
+        "user" -> cookies.get("debugId").getOrElse("{}")
+      )
     }
   }
 

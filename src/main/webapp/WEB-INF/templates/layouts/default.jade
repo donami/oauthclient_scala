@@ -47,8 +47,10 @@ html
             .ui.container#wrap
                 .main-content
                     != body
-                    button.ui.circular.icon.button(onclick="toggleDebugWindow()")
-                        i.icon.settings
+                    - if (isAuthenticated == true) {
+                        button.ui.circular.icon.button(onclick="toggleDebugWindow()")
+                            i.icon.settings
+                    - }
 
             .ui.inverted.vertical.footer.segment
                 .ui.container
