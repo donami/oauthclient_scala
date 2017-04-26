@@ -86,7 +86,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
       contentType="text/html"
       layoutTemplate("/profile.jade",
         "title" -> "Client",
-        "username" -> this.getUserInfo.get("uid").get,
+        "username" -> this.getUserInfo.get("nickname").get,
         "isAuthenticated" -> this.isAuthenticated,
         "user" -> cookies.get("debugId").getOrElse("{}")
       )
@@ -111,7 +111,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
       contentType="text/html"
       layoutTemplate("/home.jade",
         "title" -> "Client",
-        "username" -> this.getUserInfo.get("uid").get,
+        "username" -> this.getUserInfo.get("nickname").get,
         "isAuthenticated" -> this.isAuthenticated,
         "user" -> cookies.get("debugId").getOrElse("{}")
       )
