@@ -19,7 +19,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
   private val CALLBACK_URL = "https://localhost:8444/OAuth2Callback"
   private val CLIENT_URL = "https://localhost:8444"
 
-  private val scope: Seq[String] = Seq("openid", "email", "profile")
+  private val scope: Seq[String] = Seq("openid", "email", "profile", "role")
 
   /**
     * Return true if a cookie session exists
@@ -81,6 +81,16 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
 
   def scopeAsString(scope: Seq[String]): String = scope.mkString("%20")
 
+  def getErrorCode(error: String): Int = {
+    error match {
+      case "invalid_scope" => 400
+      case "invalid_request" => 400
+      case "invalid_redirect_uri" => 400
+      case "unauthorized_client" => 401
+      case _ => 400
+    }
+
+  }
 
   get("/profile") {
     if (this.isAuthenticated) {
@@ -113,6 +123,7 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
       layoutTemplate("/home.jade",
         "title" -> "Client",
         "username" -> this.getUserInfo.get("nickname").get,
+        "role" -> this.getUserInfo.get("role").get,
         "isAuthenticated" -> this.isAuthenticated,
         "user" -> cookies.get("debugId").getOrElse("{}")
       )
@@ -150,8 +161,13 @@ class MyScalatraServlet extends ScalatraoauthclientStack {
     val out = response.getWriter
 
     //Extract params out of the query url
-    val qs = request.getQueryString.split("&").map(_.split("=")).map(a=> (a(0) -> a(1))).toMap
+    val qs = request.getQueryString.split("&").map(_.split("=")).map(a=> a(0) -> a(1)).toMap
     out.println(qs)
+
+    if (qs.contains("error")) {
+      halt(this.getErrorCode(qs("error")))
+    }
+
     //TODO validate that we have a success
     val stateIn = qs("state")
     val code = qs("code")
